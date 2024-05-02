@@ -53,6 +53,8 @@ async function createUser(req, res) {
     if (existingUser) {
         return res.status(409).json({ error: 'User with this telegram already exists' });
     }
+
+    // Создаём пользователя
     const user = new User(req.body);
     user
         .save()
@@ -66,7 +68,10 @@ async function createUser(req, res) {
         })
 }
 
+// Вход пользователя - отправка JWT токена клиенту
 async function loginUser(req, res) {
+    
+    // Сравнение происходит по логину (telegram)
     const filter = { "telegram": req.body.telegram }
   
     // Находим пользователя по его telegram
